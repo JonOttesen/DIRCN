@@ -1,0 +1,31 @@
+{
+    "folders":
+    [
+        {
+            "folder_exclude_patterns":
+            [
+                "__pycache__",
+                "docker_scripts/config",
+                ".pytest_cache",
+                "htmlcov",
+                ".coverage"
+            ],
+            "path": "."
+        }
+    ],
+    "settings":
+    {
+        "PyTest":
+        {
+            "mode": "manual",
+            "options": "--tb=short -l -ff"
+        },
+        "SublimeLinter.linters.bandit.python": "/home/jon/miniconda3/envs/fMRI/bin/python",
+        "SublimeLinter.linters.mypy.python": "/home/jon/miniconda3/envs/fMRI/bin/python",
+        "SublimeLinter.linters.pylint.python": "/home/jon/miniconda3/envs/fMRI/bin/python",
+        "conda_environment": "/home/jon/miniconda3/envs/fMRI",
+        "python": "/home/jon/miniconda3/envs/fMRI",
+        "python_interpreter": "/home/jon/miniconda3/envs/fMRI/bin/python",
+        "python_virtualenv": "/home/jon/miniconda3/envs/fMRI"
+    }
+}
