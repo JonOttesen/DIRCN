@@ -1,0 +1,5 @@
+INFO:dircn.dataset.datasetloader:--------------------------------------------------------------
+INFO:dircn.dataset.datasetloader:torch.utils.data.DataLoader compatibility enabled(default=True), the first index in shape is assumed to be the slice/image/sample (N, C, H, W).
+INFO:dircn.dataset.datasetloader:Image shape must be given in entry, for pytorch torch.utils.data.DataLoader compatibility.
+INFO:dircn.dataset.datasetloader:Trying to fetch shapes from dataset...
+WARNING:dircn.dataset.datasetloader:Could not fetch shapes, insert manually, aborting program.
