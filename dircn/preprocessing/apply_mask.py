@@ -42,11 +42,9 @@ class ApplyMaskColumn(object):
             mask_generator = self.mask
 
         mask, _ = mask_generator(shape)
-        mask = mask.squeeze(0).squeeze(-1)
+        mask = mask.squeeze(0).squeeze(0).squeeze(-1).numpy()
 
-        print(mask.dtype, mask.shape)
-
-        tensor[:, :, mask != True] = 0
+        tensor[:, :, mask != 1] = 0
 
         return tensor
 
