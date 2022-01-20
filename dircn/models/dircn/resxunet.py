@@ -19,11 +19,11 @@ class ResXUNet(nn.Module):
         ratio: float = 1./8,
         activation: Union[nn.Module, None] = None,
         interconnections: bool = False,
-        make_intreconnections: bool = False,
+        make_interconnections: bool = False,
         ):
         super().__init__()
         self.interconnections = interconnections
-        self.make_intreconnections = make_intreconnections
+        self.make_interconnections = make_interconnections
 
         self.n_channels = n_channels
         self.n_classes = n_classes
@@ -133,7 +133,7 @@ class ResXUNet(nn.Module):
 
         self.up3_channel = nn.Sequential(
             nn.Conv2d(
-                in_channels=3*8*n if make_intreconnections else 2*8*n,
+                in_channels=3*8*n if make_interconnections else 2*8*n,
                 out_channels=8*n,
                 kernel_size=3,
                 stride=1,
@@ -162,7 +162,7 @@ class ResXUNet(nn.Module):
 
         self.up2_channel = nn.Sequential(
             nn.Conv2d(
-                in_channels=3*4*n if make_intreconnections else 2*4*n,
+                in_channels=3*4*n if make_interconnections else 2*4*n,
                 out_channels=4*n,
                 kernel_size=3,
                 stride=1,
@@ -193,7 +193,7 @@ class ResXUNet(nn.Module):
 
         self.up1_channel = nn.Sequential(
             nn.Conv2d(
-                in_channels=3*2*n if make_intreconnections else 2*2*n,
+                in_channels=3*2*n if make_interconnections else 2*2*n,
                 out_channels=2*n,
                 kernel_size=3,
                 stride=1,
@@ -223,7 +223,7 @@ class ResXUNet(nn.Module):
 
         self.out_channel = nn.Sequential(
             nn.Conv2d(
-                in_channels=3*n if make_intreconnections else 2*n,
+                in_channels=3*n if make_interconnections else 2*n,
                 out_channels=n,
                 kernel_size=3,
                 stride=1,
