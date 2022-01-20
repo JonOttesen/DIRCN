@@ -44,6 +44,8 @@ class ApplyMaskColumn(object):
         mask, _ = mask_generator(shape)
         mask = mask.squeeze(0).squeeze(-1)
 
+        print(mask.dtype, mask.shape)
+
         tensor[:, :, mask != True] = 0
 
         return tensor
