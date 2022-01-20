@@ -55,7 +55,6 @@ class NormNet(nn.Module):
                 groups=groups,
                 bias=bias,
                 ratio=ratio,
-                norm=norm,
                 activation=torch.nn.SiLU(inplace=True),
                 interconnections=interconnections,
                 make_interconnections=make_interconnections
@@ -170,7 +169,6 @@ class SensitivityModel(nn.Module):
             groups=sense_groups,
             bias=bias,
             ratio=ratio,
-            norm=norm,
             interconnections=False,
             make_interconnections=False,
             )
@@ -268,7 +266,6 @@ class DIRCN(nn.Module):
                 sense_groups=sense_groups,
                 bias=bias,
                 ratio=ratio,
-                norm=norm,
                 resxunet=resxunet,
             )
 
