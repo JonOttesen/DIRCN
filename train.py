@@ -37,7 +37,7 @@ train = DatasetContainer()
 train.fastMRI(path='/home/jonakri/mount/multicoil_train', datasetname='fastMRI', dataset_type='training')
 
 valid = DatasetContainer()
-valid.fastMRI(path='home/jonakri/mount/multicoil_val', datasetname='fastMRI', dataset_type='training')
+valid.fastMRI(path='/home/jonakri/mount/multicoil_val', datasetname='fastMRI', dataset_type='training')
 
 for entry in valid:
     train.add_entry(entry)
