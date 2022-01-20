@@ -229,7 +229,7 @@ class SensitivityModel(nn.Module):
         return x
 
 
-class CascadeNet(nn.Module):
+class DIRCN(nn.Module):
     """
     A full variational network model.
     This model applies a combination of soft data consistency with a U-Net
