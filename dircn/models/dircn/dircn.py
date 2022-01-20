@@ -266,7 +266,6 @@ class DIRCN(nn.Module):
                 sense_groups=sense_groups,
                 bias=bias,
                 ratio=ratio,
-                resxunet=resxunet,
             )
 
         self.i_cascades = nn.ModuleList(
