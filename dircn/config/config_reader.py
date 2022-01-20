@@ -81,7 +81,7 @@ class ConfigReader(object):
         lr_sched = self.config['lr_scheduler']
         lr_scheduler = getattr(torch.optim.lr_scheduler, lr_sched['type'])
         lr_scheduler = lr_scheduler(optimizer=optimizer,
-                                    step_size=lr_sched['args']['step_size'],
+                                    milestones=lr_sched['args']['milestones'],
                                     gamma=lr_sched['args']['gamma'])
         return lr_scheduler
 
