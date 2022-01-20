@@ -52,15 +52,7 @@ mask_generator = create_mask_for_mask_type(
 
 # From non-prconverted datasets
 
-train_transforms = torchvision.transforms.Compose([
-    DownsampleFOV(k_size=320, i_size=320, complex_support=True, quadratic=True),
-    ApplyMaskColumn(mask=mask_generator),
-    # NormalizeKspace(center_fraction=0.08, complex_support=True),
-    lambda x: x.astype(np.complex64),
-    ComplexNumpyToTensor(complex_support=False),
-    ])
-
-valid_transforms = torchvision.transforms.Compose([
+transforms = torchvision.transforms.Compose([
     DownsampleFOV(k_size=320, i_size=320, complex_support=True, quadratic=True),
     ApplyMaskColumn(mask=mask_generator),
     # NormalizeKspace(center_fraction=0.08, complex_support=True),
@@ -71,7 +63,7 @@ valid_transforms = torchvision.transforms.Compose([
 
 truth_transforms = torchvision.transforms.Compose([
     DownsampleFOV(k_size=320, i_size=320, complex_support=True, quadratic=True),
-    NormalizeKspace(center_fraction=0.08, complex_support=True),
+    # NormalizeKspace(center_fraction=0.08, complex_support=True),
     KspaceToImage(norm='ortho', complex_support=True),
     ComplexAbsolute(),  # Better to use numpy complex absolute than fastmri complex absolute
     lambda x: x.astype(np.float32),
@@ -82,13 +74,13 @@ truth_transforms = torchvision.transforms.Compose([
 
 training_loader = DatasetLoader(
     datasetcontainer=train,
-    train_transforms=train_transforms,
+    train_transforms=transforms,
     truth_transforms=truth_transforms
     )
 
 validation_loader = DatasetLoader(
     datasetcontainer=valid,
-    train_transforms=valid_transforms,
+    train_transforms=transforms,
     truth_transforms=truth_transforms
     )
 
