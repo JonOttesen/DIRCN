@@ -47,18 +47,17 @@ class NormNet(nn.Module):
 
         self.interconnections = interconnections
 
-        if resxunet:
-            self.model = ResXUNet(
-                n_channels=n_channels,
-                n_classes=2,
-                n=n,
-                groups=groups,
-                bias=bias,
-                ratio=ratio,
-                activation=torch.nn.SiLU(inplace=True),
-                interconnections=interconnections,
-                make_interconnections=make_interconnections
-            )
+        self.model = ResXUNet(
+            n_channels=n_channels,
+            n_classes=2,
+            n=n,
+            groups=groups,
+            bias=bias,
+            ratio=ratio,
+            activation=torch.nn.SiLU(inplace=True),
+            interconnections=interconnections,
+            make_interconnections=make_interconnections
+        )
 
     def complex_to_chan_dim(self, x: torch.Tensor) -> torch.Tensor:
         b, c, h, w, two = x.shape
