@@ -45,7 +45,7 @@ class NormNet(nn.Module):
         """
         super().__init__()
 
-        self.use_interconnections = use_interconnections
+        self.interconnections = interconnections
 
         if resxunet:
             self.model = ResXUNet(
