@@ -262,7 +262,7 @@ class DIRCN(nn.Module):
                 U-Net.
         """
         super().__init__()
-        self.use_maxouts = use_maxouts
+        self.interconnections = interconnections
         self.sens_net =SensitivityModel(
                 sense_n=sense_n,
                 sense_groups=sense_groups,
