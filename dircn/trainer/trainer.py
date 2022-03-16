@@ -73,7 +73,7 @@ class Trainer(BaseTrainer):
                 mask = None
 
             self.optimizer.zero_grad()  # Clear before inputting to model
-            print('before')
+
             if mask is not None:
                 output = self.model(data, mask=mask)
             else:
@@ -82,7 +82,7 @@ class Trainer(BaseTrainer):
             loss = self.loss_function(output, target)
             loss.backward()
             self.optimizer.step()
-            print('after')
+
             loss = loss.item()  # Detach loss from comp graph and moves it to the cpu
             losses['loss'].append(loss)
 
