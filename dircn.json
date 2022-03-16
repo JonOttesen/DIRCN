@@ -12,14 +12,13 @@
             "data_dir": "./docs",
             "batch_size": 1,
             "shuffle": true,
-            "num_workers": 2
+            "num_workers": 4
         }
     },
     "optimizer": {
-        "type": "AdamW",
+        "type": "Adam",
         "args":{
-            "lr": 1e-3,
-            "weight_decay": 0.01,
+            "lr": 2e-3,
             "amsgrad": true
         }
     },

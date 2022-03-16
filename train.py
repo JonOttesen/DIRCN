@@ -34,10 +34,10 @@ from dircn.preprocessing import (
 
 # Bluemaster
 train = DatasetContainer()
-train.fastMRI(path='/home/jonakri/mount/multicoil_train', datasetname='fastMRI', dataset_type='training')
+train.fastMRI(path='/itf-fi-ml/shared/users/jonakri/fastMRI/multicoil_train', datasetname='fastMRI', dataset_type='training')
 
 valid = DatasetContainer()
-valid.fastMRI(path='/home/jonakri/mount/multicoil_val', datasetname='fastMRI', dataset_type='training')
+valid.fastMRI(path='/itf-fi-ml/shared/users/jonakri/fastMRI/multicoil_val', datasetname='fastMRI', dataset_type='training')
 
 for entry in valid:
     train.add_entry(entry)
@@ -55,7 +55,7 @@ mask_generator = create_mask_for_mask_type(
 transforms = torchvision.transforms.Compose([
     DownsampleFOV(k_size=320, i_size=320, complex_support=True, quadratic=True),
     ApplyMaskColumn(mask=mask_generator),
-    # NormalizeKspace(center_fraction=0.08, complex_support=True),
+    NormalizeKspace(center_fraction=0.08, complex_support=True),
     lambda x: x.astype(np.complex64),
     ComplexNumpyToTensor(complex_support=False),
     ])
@@ -84,7 +84,7 @@ validation_loader = DatasetLoader(
     truth_transforms=truth_transforms
     )
 
-loss = [(1, FSSIMLoss())]
+loss = [(1, SSIM()), (1, torch.nn.L1Loss())]
 
 
 loss = MultiLoss(losses=loss)
@@ -106,7 +106,7 @@ path = 'dircn.json'
 
 # 45 million params
 model = DIRCN(
-    num_cascades=12,
+    num_cascades=20,
     n=28,
     sense_n=12,
     groups=4,
@@ -144,8 +144,8 @@ trainer = Trainer(
     data_loader=train_loader,
     valid_data_loader=valid_loader,
     seed=None,
-    log_step=2500,
-    device='cuda:0',
+    # log_step=2500,
+    device='cuda:3',
     )
 
 # trainer.resume_checkpoint(
