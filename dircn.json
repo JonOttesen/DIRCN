@@ -19,7 +19,8 @@
         "type": "Adam",
         "args":{
             "lr": 2e-3,
-            "amsgrad": true
+            "amsgrad": true,
+            "weight_decay": 0
         }
     },
     "lr_scheduler": {
