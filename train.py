@@ -34,24 +34,24 @@ from dircn.preprocessing import (
 
 # Bluemaster
 train = DatasetContainer()
-train.fastMRI(path='/itf-fi-ml/shared/users/jonakri/fastMRI/multicoil_train', datasetname='fastMRI', dataset_type='training')
+train.fastMRI(path='path_to_fastMRI_training', datasetname='fastMRI', dataset_type='training')
 
 valid = DatasetContainer()
-valid.fastMRI(path='/itf-fi-ml/shared/users/jonakri/fastMRI/multicoil_val', datasetname='fastMRI', dataset_type='training')
+valid.fastMRI(path='path_to_fastMRI_validation', datasetname='fastMRI', dataset_type='training')
 
 for entry in valid:
     train.add_entry(entry)
 
 train, valid = train.split(split=0.95, seed=42)
 
+# Use fastMRI masks
 mask_generator = create_mask_for_mask_type(
     "equispaced_fraction",
     center_fractions=[0.08, 0.04],
     accelerations=[4, 8],
     )
 
-# From non-prconverted datasets
-
+# On the fly processing
 transforms = torchvision.transforms.Compose([
     DownsampleFOV(k_size=320, i_size=320, complex_support=True, quadratic=True),
     ApplyMaskColumn(mask=mask_generator),
@@ -84,6 +84,7 @@ validation_loader = DatasetLoader(
     truth_transforms=truth_transforms
     )
 
+# Loss function
 loss = [(1, SSIM()), (1, torch.nn.L1Loss())]
 
 
@@ -104,7 +105,7 @@ metrics = MultiMetric(metrics=metrics)
 
 path = 'dircn.json'
 
-# 45 million params
+# 80 million params
 model = DIRCN(
     num_cascades=20,
     n=28,
@@ -149,8 +150,8 @@ trainer = Trainer(
     )
 
 # trainer.resume_checkpoint(
-    # resume_model="/itf-fi-ml/home/jonakri/fMRI/cascade/both/maxout_dense_resxunet/2021-10-28/best_validation/checkpoint-best.pth",
-    # resume_metric='/itf-fi-ml/home/jonakri/fMRI/cascade/both/maxout_dense_resxunet/2021-10-28/best_validation/statistics.json',
+    # resume_model="checkpoint_resume_file",
+    # resume_metric='training_statistics_resume_file',
     # )
 
 trainer.train()
