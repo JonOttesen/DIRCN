@@ -1,3 +1,3 @@
-# fMRI-models
+# DIRCN
 
-The branch used during my thesis and not updated since the thesis was deliverd can be found at: https://github.com/JonOttesen/fMRI-models/tree/thesis-version
+The source code for the Densely Interconnected Residual Cascading Network (DIRCN) and training scripts.

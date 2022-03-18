@@ -36,9 +36,7 @@
         "iterations": 120,
         "images_pr_iteration": 20000,
         "val_images_pr_iteration": 5000,
-        "save_dir": "/itf-fi-ml/home/jonakri/fMRI/DIRCN",
-        "save_period": 10,
-        "early_stop": 10
-
+        "save_dir": "/where_to_save_files/",
+        "save_period": 10
     }
 }
