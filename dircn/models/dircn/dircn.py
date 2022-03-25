@@ -18,15 +18,12 @@ from .resxunet import ResXUNet
 
 
 class NormNet(nn.Module):
-    """
-    Normalized U-Net model.
-    This is the same as a regular U-Net, but with normalization applied to the
-    input before the U-Net. This keeps the values more numerically stable
-    during training.
+    """A normalized wrapper for ResXUNet or for any models in that manner.
+    Each input channel is normalized independatly, and the means and stds of the first channel, i.e.,
+    for the lastest cascade is used to de-normalize the output prediction for said cascade.
     """
 
-    def __init__(
-        self,
+    def __init__(self,
         n: int = 24,
         n_channels: int = 2,
         groups: int = 4,
@@ -37,11 +34,13 @@ class NormNet(nn.Module):
         ):
         """
         Args:
-            chans: Number of output channels of the first convolution layer.
-            num_pools: Number of down-sampling and up-sampling layers.
-            in_chans: Number of channels in the input to the U-Net model.
-            out_chans: Number of channels in the output to the U-Net model.
-            drop_prob: Dropout probability.
+            n (int): the number of channels in the model
+            n_channels (int): the number of input channels
+            groups (int): the number of groups used in the convolutions, needs to dividable with n
+            bias (bool): whether to use bias or not
+            ratio (float): the ratio for squeeze and excitation
+            interconnections (bool): whether to enable interconnection
+            make_interconnections (bool): whether to make the model accept interconnection input
         """
         super().__init__()
 
@@ -141,25 +140,23 @@ class NormNet(nn.Module):
 class SensitivityModel(nn.Module):
     """
     Model for learning sensitivity estimation from k-space data.
-    This model applies an IFFT to multichannel k-space data and then a U-Net
-    to the coil images to estimate coil sensitivities. It can be used with the
-    end-to-end variational network.
+    This model applies an IFFT to multichannel k-space data and then a U-Net based model
+    to the coil images to estimate coil sensitivities.
     """
 
     def __init__(
         self,
         sense_n: int = 12,
-        sense_groups: int = 3,
+        sense_groups: int = 1,
         bias: bool = True,
         ratio: float = 1./8,
         ):
         """
         Args:
-            chans: Number of output channels of the first convolution layer.
-            num_pools: Number of down-sampling and up-sampling layers.
-            in_chans: Number of channels in the input to the U-Net model.
-            out_chans: Number of channels in the output to the U-Net model.
-            drop_prob: Dropout probability.
+            sense_n (int, optional): the number of channels to use in the sense network. Defaults to 12.
+            sense_groups (int, optional): the number of groups to use in the sense network. Defaults to 3.
+            bias (bool, optional): wheter to use bias or not. Defaults to True.
+            ratio (float, optional): the ratio to use in squeeze and excitation. Defaults to 1./8.
         """
         super().__init__()
 
@@ -228,17 +225,15 @@ class SensitivityModel(nn.Module):
 
 class DIRCN(nn.Module):
     """
-    A full variational network model.
-    This model applies a combination of soft data consistency with a U-Net
-    regularizer. To use non-U-Net regularizers, use VarNetBock.
+    The full Densly interconnected residual cascading network (DIRCN)
     """
 
     def __init__(
         self,
-        num_cascades: int = 12,
+        num_cascades: int = 30,
         n: int = 20,
         sense_n: int = 12,
-        groups: int = 5,
+        groups: int = 4,
         sense_groups: int = 1,
         bias: bool = True,
         ratio: float = 1./8,
@@ -247,16 +242,20 @@ class DIRCN(nn.Module):
         interconnections: bool = True,
         min_complex_support: bool = True,
         ):
-        """
+        """Init for the DIRCN
+
         Args:
-            num_cascades: Number of cascades (i.e., layers) for variational
-                network.
-            sens_chans: Number of channels for sensitivity map U-Net.
-            sens_pools Number of downsampling and upsampling layers for
-                sensitivity map U-Net.
-            chans: Number of channels for cascade U-Net.
-            pools: Number of downsampling and upsampling layers for cascade
-                U-Net.
+            num_cascades (int, optional): the total number of cascades. Defaults to 30.
+            n (int, optional): the number of channels to use in each cascade. Defaults to 20.
+            sense_n (int, optional): the number of channels in the sense network. Defaults to 12.
+            groups (int, optional): the number of groups for each cascade network. Defaults to 4.
+            sense_groups (int, optional): the number of groups in the sense network. Defaults to 1.
+            bias (bool, optional): whether to use bias or not. Defaults to True.
+            ratio (float, optional): the ratio for squeeze and excitation. Defaults to 1./8.
+            dense (bool, optional): whether to use dense connections or not. Defaults to True.
+            variational (bool, optional): changes the data consistency to a variational update mechanism. Defaults to False.
+            interconnections (bool, optional): whether to use interconnections. Defaults to True.
+            min_complex_support (bool, optional): enable minimum complex number support in pytorch. Defaults to True.
         """
         super().__init__()
         self.interconnections = interconnections

@@ -129,8 +129,11 @@ class Trainer(BaseTrainer):
 
                 if batch_idx*self.batch_size >= self.val_images_pr_iteration and self.iterative:
                     break
+        metric_dict = dict()
+        for key, item in metrics.items():
+            metric_dict[key] = np.mean(metrics[key])
 
-        return metrics
+        return metric_dict
 
     def _train_iteration(self, iteration):
         """
