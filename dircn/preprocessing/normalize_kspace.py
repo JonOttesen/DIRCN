@@ -3,7 +3,7 @@ from typing import Union
 import torch
 import numpy as np
 
-import fMRI.fastmri as fastmri
+import dircn.fastmri as fastmri
 
 class NormalizeKspace(object):
     """

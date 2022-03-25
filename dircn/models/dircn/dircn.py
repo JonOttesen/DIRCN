@@ -12,7 +12,7 @@ import torch.nn.functional as F
 
 import numpy as np
 
-import fMRI.fastmri as fastmri
+import dircn.fastmri as fastmri
 
 from .resxunet import ResXUNet
 

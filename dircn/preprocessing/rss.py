@@ -1,6 +1,6 @@
 import torch
 
-from fMRI.fastmri.coil_combine import rss
+from dircn.fastmri.coil_combine import rss
 
 class RSS(object):
     """

@@ -6,8 +6,7 @@ import torch
 import torch.nn as nn
 
 # Internal modules
-from fMRI.models.blocks.squeeze_excitation import SqueezeExcitation
-
+from .squeeze_excitation import SqueezeExcitation
 
 class Bottleneck(nn.Module):
     """

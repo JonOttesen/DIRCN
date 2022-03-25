@@ -9,7 +9,7 @@ from .kspace_to_image import KspaceToImage
 from .image_to_kspace import ImageToKspace
 from .crop_image import CropImage
 
-import fMRI.fastmri as fastmri
+import dircn.fastmri as fastmri
 
 
 class DownsampleFOV(object):

@@ -5,7 +5,7 @@ import torch
 if version.parse(torch.__version__) >= version.parse("1.7.0"):
     import torch.fft  # type: ignore
 
-import fMRI.fastmri as fastmri
+import dircn.fastmri as fastmri
 import matplotlib.pyplot as plt
 
 class ImageToKspace(object):
