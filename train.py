@@ -34,10 +34,10 @@ from dircn.preprocessing import (
 
 # Bluemaster
 train = DatasetContainer()
-train.fastMRI(path='path_to_fastMRI_training', datasetname='fastMRI', dataset_type='training')
+train.fastMRI(path='/where_data_is_stored/multicoil_train', datasetname='fastMRI', dataset_type='training')
 
 valid = DatasetContainer()
-valid.fastMRI(path='path_to_fastMRI_validation', datasetname='fastMRI', dataset_type='training')
+valid.fastMRI(path='/where_data_is_stored/multicoil_val', datasetname='fastMRI', dataset_type='training')
 
 for entry in valid:
     train.add_entry(entry)
@@ -107,8 +107,8 @@ path = 'dircn.json'
 
 # 80 million params
 model = DIRCN(
-    num_cascades=20,
-    n=28,
+    num_cascades=30,
+    n=20,
     sense_n=12,
     groups=4,
     sense_groups=1,
@@ -146,7 +146,7 @@ trainer = Trainer(
     valid_data_loader=valid_loader,
     seed=None,
     # log_step=2500,
-    device='cuda:3',
+    device='cuda:0',
     )
 
 # trainer.resume_checkpoint(

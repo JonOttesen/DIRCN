@@ -12,7 +12,7 @@
             "data_dir": "./docs",
             "batch_size": 1,
             "shuffle": true,
-            "num_workers": 4
+            "num_workers": 8
         }
     },
     "optimizer": {
@@ -36,7 +36,7 @@
         "iterations": 120,
         "images_pr_iteration": 20000,
         "val_images_pr_iteration": 5000,
-        "save_dir": "/where_to_save_files/",
+        "save_dir": "/where_to_save_model",
         "save_period": 10
     }
 }
